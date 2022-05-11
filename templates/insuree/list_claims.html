@@ -1,0 +1,45 @@
+{% include 'common-header.html' %}
+<script type="text/javascript" src="/static/js/vms/insuree/list_claims.js"></script>
+<div class="col-sm-9 col-lg-10">
+    <br class="hidden-xs">
+    <div class="row">
+        <div class="col-lg-10 col-md-10 col-sm-10 main-section">
+            <div class="giant-holder">
+                <p class="mini-giant">Warranty</p>
+                <div class="giant-card">
+                    <h3>Claims</h3>
+                    <hr>
+                    <!-- ko if: claims().length > 0 -->
+                    <div style="overflow: auto;">
+                        <table class="table table-responsive table-striped table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Claim Number</th>
+                                    <th>Raised on</th>
+                                    <th>DApp</th>
+                                    <th>Warranty Number</th>
+                                    <th>Claim Settlement Time</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody data-bind="foreach: claims">
+                                <tr>
+                                    <td><a class="clickable" data-bind="attr: {href: '/insuree/claim_details?id=' + id}"><span data-bind="text: 'C' + id.substr(32, 4)"></span></a></td>
+                                    <td data-bind="text: moment(created_at).format('MMM DD YYYY')"></td>
+                                    <td data-bind="text: dapp_name"></td>
+                                    <td><a class="clickable" data-bind="attr: {href: '/insuree/policy_details?id=' + policy_id}"><span data-bind="text: 'P' + policy_id.substr(32, 4)"></span></a></td>
+                                    <td data-bind="text: claim_settlement_time ? moment(claim_settlement_time).format('MMM DD YYYY') : 'Pending'"></td>
+                                    <td data-bind="text: status"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko if: claims().length === 0 -->
+                    <p>No claims found.</p>
+                    <!-- /ko -->
+                    <p class="clickable"><a href="/insuree/new_claim">Click here to raise a new claim</a>.</p>
+                </div>
+            </div>
+        </div>
+{% include 'common-footer.html' %}

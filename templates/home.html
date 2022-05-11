@@ -1,0 +1,51 @@
+{% include 'common-header.html' %}
+<script type="text/javascript" src="/static/js/dashboard.js"></script>
+
+<div class="col-sm-9 col-lg-10">
+    <br class="hidden-xs">
+    <div class="row">
+        <div class="col-lg-10 col-md-10 col-sm-10 main-section">
+            <div class="giant-holder">
+                <p class="giant">Rakshe</p>
+                <div class="giant-card">
+                    <h3>Dashboard</h3>
+                    <hr>
+                    <div class="row">
+                        <!-- ko if: emailVerification -->
+                        <div class="col-xs-12">
+                            <p class="alert alert-info" data-bind="visible: emailVerification">Your email id has not been verified. <a class="clickable" href="/profile/edit_profile">Click here to verify</a>.</p>
+                        </div>
+                        <!-- /ko -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="col-xs-12 card dashboard-card">
+                                <p data-bind="text: activePolicies, visible: activePolicies"></p>
+                                <h3>Active Warranties</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="col-xs-12 card dashboard-card">
+                                <p data-bind="text: claimsPending, visible: claimsPending"></p>
+                                <h3>Claims Pending</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="col-xs-12 card dashboard-card">
+                                <p data-bind="text: totalCoverage, visible: totalCoverage"></p>
+                                <h3>Total Coverage <small>(ETH)</small></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ko if: buyPolicy -->
+                    <div class="row">
+                        <br class="hidden-xs">
+                        <div class="col-xs-12">
+                            <div data-bind="visible: buyPolicy">
+                                <a href="/insuree/new_policy" class="btn btn-primary btn-xl">Buy a New Warranty</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /ko -->
+                </div>
+            </div>
+        </div>
+{% include 'common-footer.html' %}

@@ -1,0 +1,65 @@
+{% include 'common-header.html' %}
+<script type="text/javascript" src="/static/js/vms/developer/application_details.js"></script>
+<div class="col-sm-9 col-lg-10">
+    <br class="hidden-xs">
+    <div class="row">
+        <div class="col-lg-10 col-md-10 col-sm-10 main-section">
+            <div class="giant-holder">
+                <p class="mini-giant">Developers</p>
+                <div class="giant-card">
+                    <h3>Contract Audit Details</h3>
+                    <hr>
+                    <div>
+                        <!-- ko if: error -->
+                        <p class="validationMessage alert alert-warning" data-bind="text: error"></p>
+                        <!-- /ko -->
+                        <!-- ko if: application -->
+                        <table class="table table-responsive table-striped table-hover table-bordered">
+                            <tbody data-bind="with: application">
+                                <tr>
+                                    <td>DApp Name: </td>
+                                    <td data-bind="text: name"></td>
+                                </tr>
+                                <tr>
+                                    <td>Application Status: </td>
+                                    <td data-bind="text: status"></td>
+                                </tr>
+                                <tr>
+                                    <td>Application Submitted On: </td>
+                                    <td data-bind="text: moment(created_at).format('MMM DD YYYY - hh:mm')"></td>
+                                </tr>
+                                <tr>
+                                    <td>Website: </td>
+                                    <!-- ko if: dapp_website -->
+                                        <td><a class="clickable" target="_blank" rel="noopener nofollow" data-bind="attr: {href: dapp_website}"><span data-bind="text: dapp_website"></span></a></td>
+                                    <!-- /ko -->
+                                    <!-- ko ifnot: dapp_website -->
+                                        <td>Not available</td>
+                                    <!-- /ko -->
+                                </tr>
+                                <tr>
+                                    <td>Source Code: </td>
+                                    <!-- ko if: source_code_link -->
+                                    <td><a class="clickable" target="_blank" rel="noopener nofollow" data-bind="attr: {href: source_code_link}"><span data-bind="text: source_code_link"></span></a></td>
+                                    <!-- /ko -->
+                                    <!-- ko ifnot: source_code_link -->
+                                    <td>Not available</td>
+                                    <!-- /ko -->
+                                </tr>
+                                <tr>
+                                    <td>DApp Description: </td>
+                                    <td data-bind="text: dapp_description || 'Not Available'"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="row" data-bind="visible: cancellable">
+                            <div class="col-xs-12">
+                                <button class="btn btn-primary" data-bind="click: cancelApplication">Cancel Application</button>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+            </div>
+        </div>
+{% include 'common-footer.html' %}

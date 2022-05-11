@@ -1,0 +1,297 @@
+.s-w-100-p {
+    width: 100%;
+}
+
+.s-h-100-px {
+    height: 100px;
+}
+
+.s-black_box {
+    border: 1px solid black;
+    min-height: 100px;
+}
+
+.s-m-b-2 {
+    margin-bottom: 10px;
+}
+
+.s-m-b-6 {
+    margin-bottom: 30px;
+}
+
+.s-m-l-2 {
+    margin-left: 10px;
+}
+
+.s-m-r-3 {
+    margin-right: 15px;
+}
+
+.s-m-t-2 {
+    margin-top: 10px;
+}
+
+.s-m-t-4 {
+    margin-top: 20px;
+}
+
+.s-m-t-6 {
+    margin-top: 30px;
+}
+
+.s-m-t-15 {
+    margin-top: 75px;
+}
+
+.s-p-a-0 {
+    padding: 0px;
+}
+
+.logo-small {
+    height: 45px;
+}
+
+.logo {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.s-m-l-2 {
+    margin-left: 10px;
+}
+
+.navbar-default .navbar-nav > li > a > span {
+    visibility: hidden;
+    margin-left: 20px;
+}
+
+.navbar-default .navbar-nav > li.active > a > span {
+    visibility: visible;
+}
+
+.navbar-brand > span {
+    color: #cccccc;
+    font-family: "Source Code Pro", sans-serif;
+    font-weight: 200;
+}
+
+
+.icon-left-open {
+    color: #ffffff;
+}
+
+#navbar > ul.navbar-nav {
+    font-size: 20px;
+}
+
+body {
+    font-family: "Open Sans", sans-serif;*;
+    font-weight: 400;
+    /*font-family: "Source Code Pro", sans-serif;*/
+    background-color: #f1f1ea;
+}
+
+.giant {
+    color: #cccccc;
+    font-family: "Source Code Pro", sans-serif;
+    font-weight: 100;
+    text-align: right;
+    margin-bottom: 0px;
+    margin-right: 10%;
+}
+
+.mini-giant {
+    color: #cccccc;
+    font-family: "Source Code Pro", sans-serif;
+    font-weight: 100;
+    text-align: right;
+    margin-bottom: 0px;
+    margin-right: 10%;
+}
+
+.giant-card {
+    background-color: #ffffff;
+    width: 100%;
+    position:relative;
+}
+
+.main-section .giant-holder:last-child {
+    margin-bottom: 100px;
+}
+
+.log-in-div {
+    position: fixed;
+}
+
+
+/* xs styles */
+@media (max-width: 767px) {
+    .giant {
+        font-size: 50px;
+    }
+
+    .mini-giant {
+        font-size: 35px;
+    }
+
+    .giant-card {
+        margin-top: -5px;
+        padding: 15px 20px 30px 20px;
+    }
+}
+
+/* sm styles */
+@media (min-width: 768px) and (max-width: 991px) {
+    .giant {
+        font-size: 75px;
+    }
+
+    .mini-giant {
+        font-size: 35px;
+    }
+
+    .giant-card {
+        margin-top: -8px;
+        padding: 15px 40px 30px 40px;
+    }
+
+    .giant-holder {
+        padding-left: 1%;
+    }
+
+    .log-in-div {
+        max-width: 15%;
+        right: 0%;
+    }
+}
+
+/* md styles */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .giant {
+        font-size: 100px;
+    }
+
+    .mini-giant {
+        font-size: 50px;
+    }
+
+    .giant-card {
+        margin-top: -10px;
+        padding: 15px 40px 30px 40px;
+    }
+
+    .giant-holder {
+        padding-left: 2%;
+    }
+
+    .log-in-div {
+        max-width: 13%;
+        right: 1%;
+    }
+}
+
+/* lg styles */
+@media (min-width: 1200px) {
+    .giant {
+        font-size: 125px;
+    }
+
+    .mini-giant {
+        font-size: 75px;
+    }
+
+    .giant-card {
+        margin-top: -15px;
+        padding: 15px 40px 30px 40px;
+    }
+
+    .giant-card > h3 {
+        font-size: 30px;
+    }
+
+    .giant-holder {
+        padding-left: 3%;
+    }
+
+    .log-in-div {
+        max-width: 13%;
+        right: 1%;
+    }
+
+}
+
+.giant-card > h3, .giant-card > h3 > span {
+    color: #78aa50;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.social {
+    font-size: 20px;
+    color: #99c16b;
+}
+
+.social:hover {
+    color: #ffffff;
+}
+
+.btn-padded {
+    padding-left: 35px;
+    padding-right: 35px;
+    min-width: 150px;
+}
+
+.btn-mock {
+    border: 1px solid #78aa50;
+    background-color: #78aa50;
+    border-radius: 500px;
+}
+
+.btn-mock > p {
+    color: white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+* {
+    color: #555555;
+}
+
+.card {
+    border: 1px solid #78aa50;
+    text-align: center;
+    color: #78aa50;
+    margin: 00px 0px 15px 0px;
+    padding: 15px 5px 0px 5px;
+    min-height: 250px;
+}
+
+.card img {
+    width: 100px;
+    height: 100px;
+}
+
+.card svg {
+    width: 100px;
+    height: 100px;
+}
+
+.validationMessage {
+    color: #a94442;
+}
+
+td > a, td > a:hover {
+    display: block;
+    text-decoration: none;
+}
+
+tr > td {
+    overflow: auto;
+}
+
+.clickable, .clickable > span, .clickable > a {
+    color: #78aa50 !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    outline: none !important;
+}

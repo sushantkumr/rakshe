@@ -1,0 +1,178 @@
+{% include 'common-header.html' %}
+<script type="text/javascript" src="/static/js/vms/insuree/new_claim.js"></script>
+<script type="text/javascript" src="/static/js/libs/web3.min.js"></script>
+<div class="col-sm-9 col-lg-10">
+    <br class="hidden-xs">
+    <div class="row">
+        <div class="col-lg-10 col-md-10 col-sm-10 main-section">
+            <div class="giant-holder">
+                <p class="mini-giant">Warranty</p>
+                <div class="giant-card">
+                    <h3>Apply for Claim</h3>
+                    <hr>
+
+                    <!-- ko if: policyList().length === 0 -->
+                    No active warranties were found. A new claim cannot be filed.
+                    <!-- /ko -->
+
+                    <!-- ko if: policyList().length > 0 -->
+                    <div class="s-m-b-6">
+
+                        <!-- ko ifnot: web3.usable -->
+                        <!-- ko if: !web3.available() -->
+                        <p class="validationMessage alert alert-warning">
+                            Web3 not found. Please install the <a href="https://metamask.io/">Metamask</a> extension in your browser and refresh this page to continue.
+                        </p>
+                        <!-- /ko -->
+                        <!-- ko if: web3.available() && !web3.unlocked() -->
+                        <p class="validationMessage alert alert-warning">
+                            No accounts were found. Please unlock an account in Metamask and refresh this page to continue.
+                        </p>
+                        <!-- /ko -->
+                        <!-- /ko -->
+                    </div>
+
+                    <!-- ko if: web3.usable() -->
+                    <div>
+                        <!-- ko if: error -->
+                        <p class="validationMessage alert alert-warning" data-bind="text: error"></p>
+                        <!-- /ko -->
+
+                        <div>
+                            <form>
+                                <div class="form-group">
+                                    <label for="name">Select warranty</label> <small>(required)</small>
+                                    <select class="form-control" data-bind="options: policyList, optionsCaption: 'Select a warranty', optionsText: 'dropdown_message', value: chosenPolicy, "></select>
+                                </div>
+
+                                <!-- ko if: chosenPolicy -->
+                                <h4>Warranty details</h4>
+                                <table class="table table-responsive table-striped table-hover table-bordered">
+                                    <tbody data-bind="with: chosenPolicy">
+                                        <tr>
+                                            <td><strong>Warranty Number: </strong></td>
+                                            <td><a class="clickable" data-bind="attr: {href: '/insuree/policy_details?id=' + id}, text: 'P' + id.substr(32, 4)"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Created at: </strong></td>
+                                            <td data-bind="text: created_at"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>DApp name: </strong></td>
+                                            <td data-bind="text: dapp_name"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>DApp website: </strong></td>
+                                            <!-- ko if: ec.utils.linkify(website) -->
+                                            <td><a class="clickable" target="_blank" rel="nofollow noopener" data-bind="attr: {href: ec.utils.linkify(website)}"><span data-bind="text: website"></span></a></td>
+                                            <!-- /ko -->
+                                            <!-- ko ifnot: ec.utils.linkify(website) -->
+                                            <td>N/A</td>
+                                            <!-- /ko -->
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Warranty Activation time:</strong></td>
+                                            <td data-bind="text: policy_activation_time ? policy_activation_time : 'Pending'"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Warranty Termination time:</strong></td>
+                                            <td data-bind="text: policy_termination_time ? policy_activation_time : 'Pending'"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <!-- ko if: contractDetailsReady -->
+                                <h4>Contract details</h4>
+                                <div style="overflow: auto;">
+                                    <table class="table table-responsive table-striped table-hover table-bordered">
+                                        <tbody data-bind="foreach: contracts">
+                                            <tr>
+                                                <td><strong>Contract Address <span data-bind="text: $index() + 1"></span>: </strong></td>
+                                                <!-- ko if: address -->
+                                                <td><a class="clickable" target="_blank" rel="nofollow noopener" data-bind="attr: {href: ec.utils.getEtherscanLink(address)}"><span data-bind="text: address"></span></a></td>
+                                                <!-- /ko -->
+                                                <!-- ko if: github_source -->
+                                                <td><a class="clickable" target="_blank" rel="nofollow noopener" data-bind="attr: {href: ec.utils.getEtherscanLink(github_source)}">Source Code on GitHub <small>(Deployed at any address on the blockchain)</small></a></td>
+                                                <!-- /ko -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <h4>Signatory Details</h4>
+                                <div style="overflow: auto;">
+                                    <table class="table table-responsive table-striped table-hover table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>User Address: </strong></td>
+                                                <td><a class="clickable" target="_blank" rel="nofollow noopener" data-bind="attr: {href: ec.utils.getEtherscanLink(web3.accounts()[0])}"><span data-bind="text: web3.accounts()[0]"></span></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div style="overflow: auto;">
+                                    <table class="table table-responsive table-striped table-hover table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>Description of loss</strong> <small>(required)</small></td>
+                                                 <td><textarea placeholder="* Method invoked which resulted in loss. &#x0a;* Transaction hashes of relevant transactions. &#x0a;* Any other information." rows="10" class="form-control" data-bind="textinput: claimRemark"></textarea>
+                                                <p data-bind="visible: claimRemark().length > 0">
+                                                    Character Count: <span style="color: #78aa50;" data-bind="text: claimRemark().length"></span>
+                                                </p></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- ko if: signature -->
+                                <h4>Signature</h4>
+                                <div style="overflow: auto;">
+                                    <table class="table table-responsive table-striped table-hover table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>Message: </strong></td>
+                                                <td data-bind="text: message"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Signature: </strong></td>
+                                                <td data-bind="text: signature"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- ko if: signatureError -->
+                                <p class="validationMessage alert alert-warning" data-bind="text: signatureError"></p>
+                                <!-- /ko -->
+
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <button class="btn btn-primary" data-bind="click: raiseClaim">Raise claim</button>
+                                    </div>
+                                </div>
+                                <!-- /ko -->
+
+                                <!-- ko ifnot: signature -->
+                                <!-- ko if: signatureError -->
+                                <p class="validationMessage alert alert-warning" data-bind="text: signatureError"></p>
+                                <!-- /ko -->
+
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <button class="btn btn-primary" data-bind="click: signMessage">Sign Message</button>
+                                    </div>
+                                </div>
+                                <!-- /ko -->
+
+                                <!-- /ko -->
+                                <!-- /ko -->
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /ko -->
+                    <!-- /ko -->
+                </div>
+            </div>
+        </div>
+{% include 'common-footer.html' %}

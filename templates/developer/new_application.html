@@ -1,0 +1,50 @@
+{% include 'common-header.html' %}
+<script type="text/javascript" src="/static/js/vms/developer/new_application.js"></script>
+<div class="col-sm-9 col-lg-10">
+    <br class="hidden-xs">
+    <div class="row">
+        <div class="col-lg-10 col-md-10 col-sm-10 main-section">
+            <div class="giant-holder">
+                <p class="mini-giant">Developers</p>
+                <div class="giant-card">
+                    <h3>Submit Smart Contract for Audit</h3>
+                    <hr>
+                    <div class="s-m-b-6">
+                        <p>Are you DApp developer interested in getting third party warranty on behalf of your users? Or do you want us to approve your contracts for your users to buy warranty? Let us know about your project and we'll audit your code.</p>
+                    </div>
+                    <form>
+                        <div class="form-group">
+                            <label for="name">DApp/Contract Name</label> <small>(required)</small>
+                            <input type="text" id="name" placeholder="My DApp" class="form-control" data-bind="value: name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="sourceCodeLink">Link to Smart Contract Source Code</label> <small>(required)</small>
+                            <input type="text" id="sourceCodeLink" placeholder="Link to code on GitHub, Bitbucket, Pastebin etc." class="form-control" data-bind="value: sourceCodeLink" />
+                        </div>
+                        <div class="form-group">
+                            <label for="dappLink">Link to DApp Website</label> <small>(optional)</small>
+                            <input type="text" id="dappLink" placeholder="https://mydapp.com" class="form-control" data-bind="value: dappLink" />
+                        </div>
+                        <div class="form-group">
+                            <label for="dappDescription">Short Description of your DApp</label> <small>(optional)</small>
+                            <textarea id="dappDescription" placeholder="My DApp helps people do something fancy..." rows="10" class="form-control" data-bind="textinput: dappDescription"></textarea>
+                            <p data-bind="visible: dappDescription().length > 0">
+                                Character Count: <span style="color: #78aa50;" data-bind="text: dappDescription().length"></span>
+                            </p>
+                        </div>
+
+                        <div data-bind="visible: error" style="min-height: 24px;">
+                            <p class="validationMessage alert alert-warning" data-bind="text: error"></p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-2 col-lg-4 col-lg-offset-4">
+                                <div class="form-group s-m-t-6">
+                                    <input type="button" value="Submit" class="form-control btn btn-primary" data-bind="click: submit" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+{% include 'common-footer.html' %}

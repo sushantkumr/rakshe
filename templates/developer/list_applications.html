@@ -1,0 +1,39 @@
+{% include 'common-header.html' %}
+<script type="text/javascript" src="/static/js/vms/developer/list_applications.js"></script>
+<div class="col-sm-9 col-lg-10">
+    <br class="hidden-xs">
+    <div class="row">
+        <div class="col-lg-10 col-md-10 col-sm-10 main-section">
+            <div class="giant-holder">
+                <p class="mini-giant">Developers</p>
+                <div class="giant-card">
+                    <h3>Contracts Submitted for Audit</h3>
+                    <hr>
+                    <!-- ko if: applications().length === 0 -->
+                    <p>No contracts have been submitted for audit by you.</p>
+                    <!-- /ko -->
+                    <!-- ko if: applications().length > 0 -->
+                    <div style="overflow: auto;">
+                        <table class="table table-responsive table-striped table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Contract name</th>
+                                    <th>Status</th>
+                                    <th>Submitted on</th>
+                                </tr>
+                            </thead>
+                            <tbody data-bind="foreach: applications">
+                                <tr>
+                                    <td><a class="clickable" data-bind="attr: {href: '/developer/application_details?id=' + id}"><span data-bind="text: name"></span></a></td>
+                                    <td data-bind="text: status"></td>
+                                    <td data-bind="text: moment(created_at).format('MMM DD YYYY')"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /ko -->
+                    <p>DApp developer? <a href="/developer/new_application">Click here to get your contract audited</a>.</p>
+                </div>
+            </div>
+        </div>
+{% include 'common-footer.html' %}

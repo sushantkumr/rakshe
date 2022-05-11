@@ -1,0 +1,41 @@
+{% include 'common-header.html' %}
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<script src="/static/js/login.js"></script>
+        <div class="col-sm-9 col-lg-10">
+            <div class="row">
+                <div class="col-lg-offset-3 col-lg-5 col-md-10 col-sm-10 main-section">
+                    <div class="giant-holder">
+                        <p class="giant">Welcome</p>
+                        <div class="giant-card">
+                            <h3>Log In</h3>
+                            <div style="min-height: 24px;">
+                                <p class="validationMessage alert alert-warning" data-bind="text: error, visible: error"></p>
+                            </div>
+                            <form>
+                                <div class="form-group error-space">
+                                    <label for="loginUsername">Username</label>
+                                    <input type="text" id="loginUsername" placeholder="Username" class="form-control" data-bind="value: loginUsername" />
+                                </div>
+                                <div class="form-group error-space">
+                                    <label for="loginPassword">Password</label>
+                                    <input type="password" id="loginPassword" placeholder="Password" class="form-control" data-bind="value: loginPassword" />
+                                </div>
+                                <div align="center">
+                                    <div class="g-recaptcha" data-sitekey="6Lcjni4UAAAAANVCrfgkGg0bM66CGpb9LgIjKNjD" data-callback="loginRecaptchaOnDone"></div>
+                                    <span class="validationMessage" data-bind="text: captchaText" style="display: block; min-height: 20px;"></span>
+                                </div>
+                                <div class="form-group mt8">
+                                    <input type="button" value="Log In" class="form-control btn btn-primary" data-bind="click: login" />
+                                </div>
+                            </form>
+                            <div>Don't have an account? <a class="clickable" href="/signup">Click here to create a new account</a>.</div>
+                            <div>Forgotten your password? <a class="clickable" href="/ext/profile/forgot_password">Click here to recover it</a>.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

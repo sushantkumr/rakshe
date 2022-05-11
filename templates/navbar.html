@@ -1,0 +1,43 @@
+<body data-spy="scroll" data-target="#side-navbar" data-offset="30">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-lg-2">
+                <nav id="side-navbar" class="navbar navbar-default navbar-fixed-side">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="visible-xs navbar-brand s-p-a-0 navbar-brand-top" href="/">
+                                <div style="height: 45px; padding-left: 10px; padding-top: 3px;">
+                                    <img class="logo logo-small" src="/static/img/Rakshe landing page alt-16.svg" alt="RAKSHE" />
+                                </div>
+                            </a>
+                            <a class="hidden-xs navbar-brand navbar-brand-left s-w-100-p" href="/" style="margin-top: -30px; padding: 50px;">
+                                <img class="logo" src="/static/img/logo.svg" />
+                                <span>RAKSHE</span>
+                            </a>
+                        </div>
+                        <div>
+                            <div id="navbar" class="navbar-collapse collapse">
+                                <span class="visible-sm visible-md visible-lg" style="margin-top: 5vh;"></span>
+                                {% if current_user.is_authenticated %}
+                                    {% include 'navbar-loggedin.html' %}
+                                {% else %}
+                                    {% include 'navbar-loggedout.html' %}
+                                {% endif %}
+                            </div>
+                            <div align="center" class="hidden-xs s-w-100-p s-m-t-4">
+                                <a target="_blank" rel="noopener" href="https://www.reddit.com/r/rakshe"><span class="social icon-reddit-alien"></span></a>
+                                <a target="_blank" rel="noopener" href="https://www.facebook.com/therakshe"><span class="social icon-facebook"></span></a>
+                                <a target="_blank" rel="noopener" href="https://twitter.com/therakshe"><span class="social icon-twitter"></span></a>
+                                <a rel="noopener" href="mailto:info@rakshe.com"><span class="social icon-mail"></span></a>
+                                <a target="_blank" rel="noopener" href="https://discord.gg/QA5Vf9r"><span class="social"><img src="/static/img/discord.svg"  style="margin-left: 5px; height: 25px; width: 25px;" alt="d" /></span></a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>

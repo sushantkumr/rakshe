@@ -1,0 +1,42 @@
+                    {% if current_user.is_authenticated %}
+                        <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs log-in-div">
+                            <div class="col-xs-12">
+                                <div align="center">
+                                    <a href="/logout" class="btn btn-primary btn-xl">Log Out</a>
+                                </div>
+                                {% if Setting.get_value_by_section_option('global', 'live_status') != '0' %}
+                                    <div class="btn-sm btn-danger" id="not-live-site" style="margin-top: 10px;">
+                                        WARNING: THIS IS A DEMO SITE!
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs log-in-div">
+                            <div class="col-xs-12">
+                                <div align="center">
+                                    <a href="/login" class="btn btn-primary btn-xl">Log In</a>
+                                </div>
+                                {% if Setting.get_value_by_section_option('global', 'live_status') != '0' %}
+                                    <div class="btn-sm btn-danger" id="not-live-site" style="margin-top: 10px;">
+                                        WARNING: THIS IS A DEMO SITE!
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <!-- {% if Setting.get_value_by_section_option('global', 'live_status') != 0 %}
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs log-in-div">
+                                <div id="not-live-site" style="border: 1px solid red;">
+                                    WARNING: THIS IS A DEMO SITE!
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %} -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

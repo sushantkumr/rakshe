@@ -1,0 +1,142 @@
+/* Make changes to .btn-primary */
+
+.btn-primary {
+    color: #ffffff;
+    background-color: #78aa50;
+    border-color: #78aa50;
+    border-radius: 500px;
+}
+
+.btn-primary:hover, .btn-primary:focus:hover,
+.btn-primary.focus:hover, .btn-primary:focus:active:hover,
+.btn-primary:active:hover, .btn-primary.active:hover {
+    color: #78aa50;
+    background-color: #ffffff;
+    border-color: #78aa50;
+}
+
+.btn-primary:active, .btn-primary:focus,
+.btn-primary.active.focus, .btn-primary.active:focus,
+.btn-primary:active.focus, .btn-primary:active:focus {
+    color: #ffffff;
+    background-color: #73a04b;
+    border-color: #73a04b;
+    outline:none;
+}
+
+.jumbotron {
+    background-color: inherit;
+}
+
+/* Removes the white line below each navbar item */
+.navbar-default .navbar-nav > li > a {
+  border-bottom: 0px;
+  text-align: right;
+}
+
+
+/* Removes line below image */
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #343434;
+}
+
+/* Border around the whole navbar */
+.navbar-default {
+  border-width: 0px;
+}
+
+/* Removes the 1px margin on the left and right side of the navbar, esp on phone */
+.navbar-fixed-side {
+    margin-left: -16px;
+    margin-right: -16px;
+}
+
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  background-color: #78aa50;
+}
+
+.navbar-brand-left {
+    color: #ffffff !important;
+    font-size: 30px;
+    font-weight: 200;
+    text-align: center;
+}
+
+.navbar-brand-left > img {
+    margin: 20px 20px 30px 20px;
+}
+
+.navbar-font-family {
+    font-family: "Source Code Pro", sans-serif;
+    font-weight: 400;
+}
+
+.navbar-fixed-side {
+    overflow: auto;
+}
+
+.dropdown-menu {
+    font-size: 17px;
+    cursor: pointer;
+    border-top: 0px solid #ffffff;
+    border-bottom: 1px solid #ffffff;
+    border-left: none !important;
+    border-right: none !important;
+    border-radius: 0px;
+    padding: 0px;
+    width: 100%;
+    background-color: transparent;
+}
+
+.dropdown-menu:first-child {
+    border-top: 1px solid white !important;
+}
+
+.dropdown-menu > ul {
+    list-style: none;
+    text-align: right;
+    padding: 0px;
+}
+
+.dropdown-menu > ul > li {
+    padding: 0px;
+}
+
+.dropdown-menu > ul > li > a {
+    font-size: 15px;
+    color: #cccccc;
+    padding: 5px 25px 5px 0px;
+    display: block;
+}
+
+.dropdown-menu > ul > li > a:hover,
+.dropdown-menu > ul > li > a:active,
+.dropdown-menu > ul > li > a:focus {
+    text-decoration: none;
+}
+
+.dropdown-menu > ul > li:hover {
+    background-color: #78aa50;
+}
+
+.dropdown-menu > ul > li:hover > a {
+    color: #ffffff;
+}
+
+.dropdown-menu > ul > .active,
+.dropdown-menu > ul > .active > a {
+  color: #ffffff;
+  background-color: #78aa50;
+}
+
+.dashboard-card > p {
+    font-size: 110px;
+    color: #78aa50;
+}
+
+.dashboard-card > h3 {
+    color: #939393;
+}

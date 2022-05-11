@@ -1,0 +1,158 @@
+{% include 'common-header.html' %}
+<script type="text/javascript" src="/static/js/vms/insuree/policy_details.js"></script>
+<script type="text/javascript" src="/static/js/libs/web3.min.js"></script>
+<div class="col-sm-9 col-lg-10">
+    <br class="hidden-xs">
+    <div class="row">
+        <div class="col-lg-10 col-md-10 col-sm-10 main-section">
+            <div class="giant-holder">
+                <p class="mini-giant">Warranty</p>
+                <div class="giant-card">
+                    <h3>Warranty Details</h3>
+                    <hr>
+                    <div>
+                        <!-- ko if: error -->
+                        <p class="validationMessage alert alert-warning" data-bind="text: error"></p>
+                        <!-- /ko -->
+
+                        <!-- ko if: policy && dapp -->
+                        <!-- ko if: policy().note -->
+                        <h3>Note</h3>
+                        <div style="overflow: auto;">
+                            <table class="table table-responsive table-striped table-hover table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td class="alert alert-danger" data-bind="text: policy().note"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /ko -->
+
+                        <!-- ko if: policy() && policy().fee_received === 'false' -->
+                        <div>
+                            <h3>Fee Payment Pending</h3>
+                            <!-- ko if: web3.err() -->
+                            <p class="validationMessage alert alert-warning" data-bind="text: web3.err"></p>
+                            <!-- /ko -->
+                            <!-- ko if: !web3.err() -->
+                            <div class="s-m-t-2">
+                                <!-- ko ifnot: feeTx -->
+                                <p>Click on "Pay Fee" to send <span data-bind="text: policy().fee"></span> ETH to the address <a class="clickable" rel="noopener nofollow" target="_blank" data-bind="attr: {href: ec.utils.getEtherscanLink('0x4de22441e9bdc4901235d9c2b83947c562114355')}">0x4de22441e9bdc4901235d9c2b83947c562114355</a>.</p>
+                                <button class="btn btn-primary" data-bind="click: payFee">Pay Fee</button>
+                                <!-- /ko -->
+                                <!-- ko if: feeTx() -->
+                                <p class="alert alert-info">Waiting for transaction <a class="clickable" rel="noopener nofollow" target="_blank" data-bind="attr: {href: ec.utils.getEtherscanLink(feeTx())}, text: feeTx"></a> to be mined.</p>
+                                <!-- /ko -->
+                                <hr>
+                            </div>
+                            <!-- /ko -->
+                            <div class="">
+                                <p>Have you already paid the fee? Enter the transaction hash here and we'll verify it!</p>
+                                <div class="form-group">
+                                    <label for="tx-hash">Transaction Hash</label>
+                                    <input id="tx-hash" type="text" data-bind="value: txHash" class="form-control" />
+                                </div>
+
+                                <div class="form-group">
+                                    <button class="btn btn-primary" data-bind="click: submit">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- /ko -->
+
+                        <h3>Warranty Information</h3>
+                        <div style="overflow: auto;">
+                            <table class="table table-responsive table-striped table-hover table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Warranty Number:</strong></td>
+                                        <td data-bind="text: 'P' + policy().id.substr(32, 4)"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Warranty Status:</strong></td>
+                                        <td data-bind="text: policy().status"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Applied On:</strong></td>
+                                        <td data-bind="text: moment(policy().created_at).format('MMM DD YYYY')"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Warranty Activation Time:</strong></td>
+                                        <td data-bind="text: policy().policy_activation_time ? policy().policy_activation_time : 'Pending'"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Warranty Termination Time:</strong></td>
+                                        <td data-bind="text: policy().policy_termination_time ? policy().policy_termination_time : 'Pending'"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Coverage Limit:</strong></td>
+                                        <td data-bind="text: policy().coverage_limit"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Fee:</strong></td>
+                                        <td data-bind="text: policy().fee"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Fee Received:</strong></td>
+                                        <!-- ko if: policy().fee_received === 'true' -->
+                                            <td>Yes</td>
+                                        <!-- /ko -->
+                                        <!-- ko if: policy().fee_received !== 'true' -->
+                                            <td class="alert alert-danger">No</td>
+                                        <!-- /ko -->
+                                    </tr>
+                                    <!-- ko if: policy().fee_received === 'true' -->
+                                    <tr>
+                                        <td><strong>Fee Paid Transaction:</strong></td>
+                                        <td><a class="clickable" target="_blank" rel="nofollow noopener" data-bind="attr: {href: ec.utils.getEtherscanLink(policy().tx_hash)}"><span data-bind="text: policy().tx_hash"></span></a></td>
+                                    </tr>
+                                    <!-- /ko -->
+                                    <tr>
+                                        <td><strong>User Address:</strong></td>
+                                        <td><a class="clickable" target="_blank" rel="nofollow noopener" data-bind="attr: {href: ec.utils.getEtherscanLink(policy().insuree_address)}"><span data-bind="text: policy().insuree_address"></span></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>DApp Name:</strong></td>
+                                        <td><a class="clickable" rel="noopener nofollow" target="_blank" data-bind="attr: {href: ec.utils.linkify(dapp().website)}, text: dapp().name"></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Contract(s):</strong></td>
+                                        <td data-bind="foreach: policy().contracts">
+                                            <p><a class="clickable" rel="nofollow noopener" target="_blank" data-bind="attr: {href: ec.utils.getEtherscanLink($data)}"><span data-bind="text: $data.startsWith('0x') ? $data : 'Source Code on GitHub'"></span></a></p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>Signatures</h3>
+                        <div style="overflow: auto;">
+                            <table class="table table-responsive table-striped table-hover table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Message:</strong></td>
+                                        <td data-bind="text: policy().message"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>User's Signature:</strong></td>
+                                        <td data-bind="text: policy().insuree_signature"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Rakshe Admin's Signature:</strong></td>
+                                        <td data-bind="text: policy().insurer_signature ? policy().insurer_signature : 'Pending'"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Rakshe Admin's Address:</strong></td>
+                                        <td data-bind="text: policy().insurer_address ? policy().insurer_address : 'Pending'"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+            </div>
+        </div>
+{% include 'common-footer.html' %}

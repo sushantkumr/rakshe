@@ -1,0 +1,49 @@
+{% include 'common-header.html' %}
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<script type="text/javascript" src="/static/js/signup.js"></script>
+    <div class="col-sm-9 col-lg-10">
+        <div class="row">
+            <div class="col-lg-offset-3 col-lg-5 col-md-10 col-sm-10 main-section">
+                <div class="giant-holder">
+                    <p class="giant">Welcome</p>
+                    <div class="giant-card">
+                        <h3>Sign Up Here</h3>
+                        <div style="min-height: 24px;">
+                                <p class="validationMessage alert alert-warning" data-bind="text: error, visible: error"></p>
+                        </div>
+                        <form>
+                            <div class="form-group error-space">
+                                <label for="loginUsername">Username</label>
+                                <input type="text" id="loginUsername" placeholder="Username" class="form-control" data-bind="value: username" />
+                            </div>
+                            <div class="form-group error-space">
+                                <label for="emailId">Email Id</label> <small>(optional)</small>
+                                <input type="text" id="emailId" placeholder="username@domain.com" class="form-control" data-bind="value: emailId" />
+                            </div>
+                            <div class="form-group error-space">
+                                <label for="login_password">Password</label>
+                                <input type="password" id="login_password" placeholder="Password" class="form-control" data-bind="value: password" />
+                            </div>
+                            <div class="form-group error-space">
+                                <label for="confirmPassword">Confirm Password</label>
+                                <input type="password" id="confirmPassword" placeholder="Confirm Password" class="form-control" data-bind="value: confirmPassword" />
+                            </div>
+                            <div align="center">
+                                <div class="g-recaptcha" data-sitekey="6LdqpS4UAAAAALJn10jxTH0bwve8PI5jNDHfsiBW" data-callback="signupRecaptchaOnDone"></div>
+                                <span class="validationMessage" data-bind="text: captchaText" style="display: block; min-height: 20px;"></span>
+                            </div>
+                            <div class="form-group mt8">
+                                <input type="button" value="Sign Up" class="form-control btn btn-primary" data-bind="click: signup" />
+                            </div>
+                        </form>
+                        <div>Already have an account? <a class="clickable" href="/login">Click here to login</a>.</div>
+                        <div>Forgotten your password? <a class="clickable" href="/ext/profile/forgot_password">Click here to recover it</a>.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

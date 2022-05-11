@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Rakshe - Smart Contract Insurance</title>
+
+    <link rel="shortcut icon" href="/static/faviconit/favicon.ico">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-navbar-fixed-side.css">
+    <link rel="stylesheet" href="/static/css/navbar.css">
+    <link rel="stylesheet" href="/static/css/overrides.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+
+    <link rel="stylesheet" href="/static/fontello/css/fontello.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Code+Pro:200,400" rel="stylesheet">
+
+    <script type="text/javascript" src="/static/js/libs/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/libs/knockout-min.js"></script>
+    <script type="text/javascript" src="/static/js/libs/knockout-sortable.js"></script>
+    <script type="text/javascript" src="/static/js/libs/knockout.validation.min.js"></script>
+    <script type="text/javascript" src="/static/js/libs/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/libs/bootbox.min.js"></script>
+    <script type="text/javascript" src="/static/js/libs/moment.min.js"></script>
+    <script type="text/javascript" src="/static/js/libs/Chart.min.js"></script>
+
+    <script type="text/javascript" src="/static/js/home.js"></script>
+    <script type="text/javascript" src="/static/js/utils.js"></script>
+    <script type="text/javascript" src="/static/js/ko_custom_validators.js"></script>
+
+    <script type="text/javascript" src="/static/js/vms/insuree/external_policy.js"></script>
+    <script type="text/javascript" src="/static/js/libs/web3.min.js"></script>
+
+</head>
+
+<body data-spy="scroll" data-offset="30">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-sm-9 col-lg-10">
+                <br class="hidden-xs">
+                <div class="row">
+                    <div class="col-lg-12 col-md-10 col-sm-10 main-section">
+                        <div class="giant-holder">
+                            <p class="mini-giant">Insuree</p>
+                            <div class="giant-card">
+                                <h3>Apply for Insurance</h3>
+                                <hr>
+                                <!-- ko if: !chosenDapp() && error() -->
+                                <p class="validationMessage alert alert-warning" data-bind="text: error"></p>
+                                <!-- /ko -->
+                                <!-- ko if: chosenDapp() -->
+                                <div class="s-m-b-6">
+                                    <h4>Important Terms and Conditions</h4>
+                                    <p>Please read the Terms and Condiditions <a href="https://rakshe.com/" target="_blank">here</a></p>
+                                    <p>A message will have to be signed at the end of the form. We recommend installing the <a href="https://metamask.io/" target="_blank">Metamask</a> extension to complete this step.</p>
+                                    <!-- ko ifnot: web3.usable -->
+                                    <!-- ko if: !web3.available() -->
+                                    <p class="validationMessage alert alert-warning">
+                                        Web3 not found. Please install the <a href="https://metamask.io/">Metamask</a> extension in your browser and refresh this page to continue.
+                                    </p>
+                                    <!-- /ko -->
+                                    <!-- ko if: web3.available() && !web3.unlocked() -->
+                                    <p class="validationMessage alert alert-warning">
+                                        No accounts were found. Please unlock an account in Metamask and refresh this page to continue.
+                                    </p>
+                                    <!-- /ko -->
+                                    <!-- ko if: web3.available() && web3.unlocked() -->
+                                    <p class="validationMessage alert alert-warning" data-bind="text: web3.err"></p>
+                                    <!-- /ko -->
+                                    <!-- /ko -->
+
+                                    <!-- ko if: web3.usable -->
+                                    <label for="importantNote">
+                                        <input id="importantNote" type="checkbox" data-bind="checked: importantNote" /> I have read and agree to the above terms and conditions.
+                                    </label>
+                                    <!-- /ko -->
+                                </div>
+                                <!-- ko if: importantNote() && web3.usable() -->
+                                <div>
+                                    <!-- ko if: error -->
+                                    <p class="validationMessage alert alert-warning" data-bind="text: error"></p>
+                                    <!-- /ko -->
+
+                                    <div>
+                                        <form>
+                                            <!-- ko if: chosenDapp() -->
+                                            <h4>DApp details</h4>
+                                            <table class="table table-responsive table-striped table-hover table-bordered">
+                                                <tbody data-bind="with: chosenDapp">
+                                                    <tr>
+                                                        <td><strong>Name: </strong></td>
+                                                        <td data-bind="text: name"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Website: </strong></td>
+                                                        <!-- ko if: ec.utils.linkify(website) -->
+                                                        <td><a class="clickable" target="_blank" rel="nofollow noopener" data-bind="attr: {href: ec.utils.linkify(website)}"><span data-bind="text: website"></span></a></td>
+                                                        <!-- /ko -->
+                                                        <!-- ko ifnot: ec.utils.linkify(website) -->
+                                                        <td>N/A</td>
+                                                        <!-- /ko -->
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <!-- ko if: contractDetailsReady -->
+                                            <h4>DApp Contracts</h4>
+                                            <h5>Note: Please confirm that the contract(s) listed below are the ones you wish to interact with.</h5>
+                                            <div style="overflow: auto;">
+                                                <table class="table table-responsive table-striped table-hover table-bordered">
+                                                    <tbody data-bind="foreach: contracts">
+                                                        <tr>
+                                                            <td><strong>Contract Address <span data-bind="text: $index() + 1"></span>: </strong></td>
+                                                            <!-- ko if: address -->
+                                                            <td><a class="clickable" target="_blank" rel="nofollow noopener" data-bind="attr: {href: ec.utils.getEtherscanLink(address)}"><span data-bind="text: address"></span></a></td>
+                                                            <!-- /ko -->
+                                                            <!-- ko if: github_source -->
+                                                            <td><a class="clickable" target="_blank" rel="nofollow noopener" data-bind="attr: {href: ec.utils.getEtherscanLink(github_source)}">Source Code on GitHub <small>(Deployed at any address on the blockchain)</small></a></td>
+                                                            <!-- /ko -->
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <h4>Coverage and Fees</h4>
+                                            <label for="coverage"></label>
+
+                                            <div class="form-group">
+                                                <label for="coverage">Coverage Limit</label> <small>(required)</small>
+                                                <br><small>Min: <span data-bind="text: chosenDapp().policy_coverage_min"></span> ETH &nbsp;--&nbsp; Max: <span data-bind="text: chosenDapp().policy_coverage_max"></span> ETH </small>
+                                                <input id="coverage" class="form-control" type="text" data-bind="textinput: coverageLimit" />
+
+                                                <!-- ko if: coverageLimit.isValid() -->
+                                                <br>
+                                                <div style="overflow: auto;">
+                                                    <table class="table table-responsive table-striped table-hover table-bordered">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><strong>Coverage Limit: </strong></td>
+                                                                <td><span data-bind="text: coverageLimit"></span> ETH</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>Fee: </strong></td>
+                                                                <td><span data-bind="text: fee"></span> ETH</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!-- /ko -->
+                                            </div>
+
+                                            <h4>Signatory Details</h4>
+                                            <div style="overflow: auto;">
+                                                <table class="table table-responsive table-striped table-hover table-bordered">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><strong>User Address: </strong></td>
+                                                            <td><a class="clickable" target="_blank" rel="nofollow noopener" data-bind="attr: {href: ec.utils.getEtherscanLink(web3.accounts()[0])}"><span data-bind="text: web3.accounts()[0]"></span></a></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <!-- ko if: signature -->
+                                            <h4>Signature</h4>
+                                            <div style="overflow: auto;">
+                                                <table class="table table-responsive table-striped table-hover table-bordered">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><strong>Message: </strong></td>
+                                                            <td data-bind="text: message"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Signature: </strong></td>
+                                                            <td data-bind="text: signature"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <!-- ko if: signatureError -->
+                                            <p class="validationMessage alert alert-warning" data-bind="text: signatureError"></p>
+                                            <!-- /ko -->
+
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <button class="btn btn-primary" data-bind="click: submitApplication">Submit Application</button>
+                                                </div>
+                                            </div>
+                                            <!-- /ko -->
+
+                                            <!-- ko ifnot: signature -->
+                                            <!-- ko if: signatureError -->
+                                            <p class="validationMessage alert alert-warning" data-bind="text: signatureError"></p>
+                                            <!-- /ko -->
+
+                                            <!-- ko if: message -->
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <button class="btn btn-primary" data-bind="click: signMessage">Sign Message</button>
+                                                </div>
+                                            </div>
+                                            <!-- /ko -->
+                                            <!-- /ko -->
+
+                                            <!-- /ko -->
+                                            <!-- /ko -->
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- /ko -->
+                                <!-- /ko -->
+                            </div>
+                        </div>
+                    </div>
+                    {% if current_user.is_authenticated %}
+                        <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs log-in-div">
+                            <div class="col-xs-12">
+                                <div align="center">
+                                    <a href="/logout" class="btn btn-primary btn-xl">Log Out</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs log-in-div">
+                            <div class="col-xs-12">
+                                <div align="center">
+                                    <a href="/login" class="btn btn-primary btn-xl">Log In</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

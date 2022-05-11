@@ -1,0 +1,17 @@
+{% include 'common-header.html' %}
+<script type="text/javascript" src="/static/js/vms/profile/email_verification.js"></script>
+
+<div class="col-sm-9 col-lg-10">
+    <br class="hidden-xs">
+    <div class="row">
+        <div class="col-lg-10 col-md-10 col-sm-10 main-section">
+            <div class="giant-holder">
+                <span id="insurance"></span>
+                <p class="giant">Rakshe</p>
+                <div class="giant-card">
+                    <h4><p class="validationMessage alert alert-warning" data-bind="text: error, visible: error"></p></h4>
+                    <h4><p class="alert alert-success" data-bind="text: success, visible: success"></p></h4>
+                </div>
+            </div>
+        </div>
+{% include 'common-footer.html' %}

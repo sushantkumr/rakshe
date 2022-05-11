@@ -1,0 +1,13 @@
+[Unit]
+Description=uWSGI instance to serve rakshe.com
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/var/www/rakshe
+Environment="PATH=/var/www/rakshe/venv/bin"
+ExecStart=/var/www/rakshe/venv/bin/uwsgi --ini uwsgi.ini
+
+[Install]
+WantedBy=multi-user.target

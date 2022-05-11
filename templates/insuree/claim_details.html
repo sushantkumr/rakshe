@@ -1,0 +1,85 @@
+{% include 'common-header.html' %}
+<script type="text/javascript" src="/static/js/vms/insuree/claim_details.js"></script>
+<div class="col-sm-9 col-lg-10">
+    <br class="hidden-xs">
+    <div class="row">
+        <div class="col-lg-10 col-md-10 col-sm-10 main-section">
+            <div class="giant-holder">
+                <p class="mini-giant">Warranty</p>
+                <div class="giant-card">
+                    <h3>Claim Details</h3>
+                    <hr>
+                    <div class="s-m-b-6">
+                    </div>
+                    <div>
+                        <!-- ko if: error -->
+                        <p class="validationMessage alert alert-warning" data-bind="text: error"></p>
+                        <!-- /ko -->
+
+                        <!-- ko if: claim && dapp -->
+                        <h3>Claim Information</h3>
+                        <div style="overflow: auto;">
+                            <table class="table table-responsive table-striped table-hover table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Claim Number:</strong></td>
+                                        <td data-bind="text: 'C' + claim().id.substr(32, 4)"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Claim Status:</strong></td>
+                                        <td data-bind="text: claim().status"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Applied On:</strong></td>
+                                        <td data-bind="text: moment(claim().created_at).format('MMM DD YYYY')"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Warranty Number: </strong></td>
+                                        <td><a class="clickable" data-bind="attr: {href: '/insuree/policy_details?id=' + claim().policy_id}, text: 'P' + claim().policy_id.substr(32, 4)"></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td><strong>DApp Name:</strong></td>
+                                        <td data-bind="text: dapp().name"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>User Address:</strong></td>
+                                        <td><a class="clickable" target="_blank" rel="nofollow noopener" data-bind="attr: {href: ec.utils.getEtherscanLink(claim().insuree_address)}"><span data-bind="text: claim().insuree_address"></span></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Claim Descriprion:</strong></td>
+                                        <td data-bind="text: claim().claim_remark"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Claim Settlement Time:</strong></td>
+                                        <td data-bind="text: claim().claim_settlement_time ? claim().claim_settlement_time : 'Pending'"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>Signatures</h3>
+                        <div style="overflow: auto;">
+                            <table class="table table-responsive table-striped table-hover table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Message:</strong></td>
+                                        <td data-bind="text: claim().message"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>User's Signature:</strong></td>
+                                        <td data-bind="text: claim().insuree_signature"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Rakshe Admin's Signature:</strong></td>
+                                        <td data-bind="text: claim().insurer_signature ? claim().insurer_signature : 'Pending'"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+            </div>
+        </div>
+{% include 'common-footer.html' %}

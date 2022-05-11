@@ -1,0 +1,10 @@
+[Unit]
+Description=Ethereum go client
+
+[Service]
+User=ubuntu
+Group=www-data
+ExecStart=/usr/bin/geth --dev --datadir /home/ubuntu/.ethereum --ipcpath "/home/ubuntu/geth.ipc" >> /var/log/geth/geth 2>&1 &
+
+[Install]
+WantedBy=multi-user.target

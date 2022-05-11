@@ -1,0 +1,205 @@
+{% include 'common-header.html' %}
+<script type="text/javascript" src="/static/js/vms/insuree/new_policy.js"></script>
+<script type="text/javascript" src="/static/js/libs/web3.min.js"></script>
+<div class="col-sm-9 col-lg-10">
+    <br class="hidden-xs">
+    <div class="row">
+        <div class="col-lg-10 col-md-10 col-sm-10 main-section">
+            <div class="giant-holder">
+                <p class="mini-giant">Warranty</p>
+                <div class="giant-card">
+                    <h3>Apply for Warranty</h3>
+                    <hr>
+                    <!-- ko if: approvedDapps().length === 0 && error() -->
+                    <p class="validationMessage alert alert-warning" data-bind="text: error"></p>
+                    <!-- /ko -->
+                    <!-- ko if: approvedDapps().length > 0 -->
+                    <div class="s-m-b-6">
+                        <h4>Important Terms and Conditions</h4>
+                        <p>The service provided by <a href="https://rakshe.com" target="_blank">rakshe.com</a> is still in alpha stage. Any or all of the features that were advertised or mentioned on this site or elsewhere may not be fully functional yet.</p>
+                        <p>Only a limited set of contracts are eligible for warranty. If you are a DApp developer and would like to get your DApp added to the list below please fill the form <a href="/developer/new_application">here</a>.</p>
+                        <p>Only ETH (Ether) that is used while interacting with these contracts will be reimbursed in case the warranty holder incurs a loss.</p>
+                        <p>Any other kinds of loss, including ERC20 and ERC721 tokens, arising out of bugs due to bugs in their contracts will not be eligible for a claim. Eg: If an ERC20 token is lost due to a bug in the implementation of the ERC20 contract it will not be eligible for claim against a warranty provided to a decentralized exchange contract.</p>
+                        <p>If ERC20, ERC721, or other tokens and collectibles are lost due to bugs in a contract which is covered under our warranty the maximum compensation will be capped by the cost of the token in terms of ETH. If tokens worth 10 ETH are lost and the warranty only offers a coverage of 5 ETH then the maximum claim that can be filed is for 5 ETH in the case of non-fungible assets and tokens worth 5 ETH in case of fungible assets.</p>
+                        <p>Losses occurring due to user errors such as lost private keys, incorrect user inputs to methods etc. will not be eligible for compensation.</p>
+                        <p>ETH (Ether) that is spent as "gas" will not be eligible for claims.</p>
+                        <p>Only losses occurring due to bugs in the smart contract which causes the contract to behave in unexpected ways will be eligible for compensation.</p>
+                        <p>Only a limited number of warranties will be issued at this point of time. Please check and confirm if your application has been approved for warranty after submitting the form. Claims will be accepted only if you are able to produce a message signed by us stating that your warranty is active.</p>
+                        <p>A message will have to be signed at the end of the form. We recommend installing the <a href="https://metamask.io/" target="_blank">Metamask</a> extension to complete this step.</p>
+                        <p>A claim we considered as valid only if the loss was incurred by the address used to sign the message at the end of this form. If the warranty holder uses any other address to interact with the contract and incurs a loss it will not be eligible for a claim.</p>
+                        <p>A claim will be considered as valid only if the loss occurs within a period of 1 week from when the warranty is issued. The claim application has to be submitted within one week of the loss to be eligible for compensation.</p>
+
+                        <!-- ko ifnot: web3.usable -->
+                        <!-- ko if: !web3.available() -->
+                        <p class="validationMessage alert alert-warning">
+                            Web3 not found. Please install the <a href="https://metamask.io/">Metamask</a> extension in your browser and refresh this page to continue.
+                        </p>
+                        <!-- /ko -->
+                        <!-- ko if: web3.available() && !web3.unlocked() -->
+                        <p class="validationMessage alert alert-warning">
+                            No accounts were found. Please unlock an account in Metamask and refresh this page to continue.
+                        </p>
+                        <!-- /ko -->
+                        <!-- ko if: web3.available() && web3.unlocked() -->
+                        <p class="validationMessage alert alert-warning" data-bind="text: web3.err"></p>
+                        <!-- /ko -->
+                        <!-- /ko -->
+
+                        <!-- ko if: web3.usable -->
+                        <label for="importantNote">
+                            <input id="importantNote" type="checkbox" data-bind="checked: importantNote" /> I have read and agree to the above terms and conditions.
+                        </label>
+                        <!-- /ko -->
+                    </div>
+                    <!-- ko if: importantNote() && web3.usable() -->
+                    <div>
+                        <!-- ko if: error -->
+                        <p class="validationMessage alert alert-warning" data-bind="text: error"></p>
+                        <!-- /ko -->
+
+                        <div>
+                            <form>
+                                <div class="form-group">
+                                    <label for="name">Select DApp</label> <small>(required)</small>
+                                    <select class="form-control" data-bind="options: approvedDapps,
+                                                                            optionsText: 'name',
+                                                                            value: chosenDapp,
+                                                                            optionsCaption: 'Choose the DApp you wish to use...'
+                                                                            "></select>
+
+                                </div>
+                                <!-- ko if: chosenDapp -->
+                                <h4>DApp details</h4>
+                                <table class="table table-responsive table-striped table-hover table-bordered">
+                                    <tbody data-bind="with: chosenDapp">
+                                        <tr>
+                                            <td><strong>Name: </strong></td>
+                                            <td data-bind="text: name"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Website: </strong></td>
+                                            <!-- ko if: ec.utils.linkify(website) -->
+                                            <td><a class="clickable" target="_blank" rel="nofollow noopener" data-bind="attr: {href: ec.utils.linkify(website)}"><span data-bind="text: website"></span></a></td>
+                                            <!-- /ko -->
+                                            <!-- ko ifnot: ec.utils.linkify(website) -->
+                                            <td>N/A</td>
+                                            <!-- /ko -->
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <!-- ko if: contractDetailsReady -->
+                                <h4>DApp Contracts</h4>
+                                <h5>Note: Please confirm that the contract(s) listed below are the ones you wish to interact with.</h5>
+                                <div style="overflow: auto;">
+                                    <table class="table table-responsive table-striped table-hover table-bordered">
+                                        <tbody data-bind="foreach: contracts">
+                                            <tr>
+                                                <td><strong>Contract Address <span data-bind="text: $index() + 1"></span>: </strong></td>
+                                                <!-- ko if: address -->
+                                                <td><a class="clickable" target="_blank" rel="nofollow noopener" data-bind="attr: {href: ec.utils.getEtherscanLink(address)}"><span data-bind="text: address"></span></a></td>
+                                                <!-- /ko -->
+                                                <!-- ko if: github_source -->
+                                                <td><a class="clickable" target="_blank" rel="nofollow noopener" data-bind="attr: {href: ec.utils.getEtherscanLink(github_source)}">Source Code on GitHub <small>(Deployed at any address on the blockchain)</small></a></td>
+                                                <!-- /ko -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <h4>Coverage and Fees</h4>
+                                <label for="coverage"></label>
+
+                                <div class="form-group">
+                                    <label for="coverage">Coverage Limit</label> <small>(required)</small>
+                                    <br><small>Min: <span data-bind="text: chosenDapp().policy_coverage_min"></span> ETH &nbsp;--&nbsp; Max: <span data-bind="text: chosenDapp().policy_coverage_max"></span> ETH </small>
+                                    <input id="coverage" class="form-control" type="text" data-bind="textinput: coverageLimit" />
+
+                                    <!-- ko if: coverageLimit.isValid() -->
+                                    <br>
+                                    <div style="overflow: auto;">
+                                        <table class="table table-responsive table-striped table-hover table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <td><strong>Coverage Limit: </strong></td>
+                                                    <td><span data-bind="text: coverageLimit"></span> ETH</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Fee: </strong></td>
+                                                    <td><span data-bind="text: fee"></span> ETH</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Duration: </strong></td>
+                                                    <td><span> 90 days</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /ko -->
+                                </div>
+
+                                <h4>Signatory Details</h4>
+                                <div style="overflow: auto;">
+                                    <table class="table table-responsive table-striped table-hover table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>User Address: </strong></td>
+                                                <td><a class="clickable" target="_blank" rel="nofollow noopener" data-bind="attr: {href: ec.utils.getEtherscanLink(web3.accounts()[0])}"><span data-bind="text: web3.accounts()[0]"></span></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- ko if: signature -->
+                                <h4>Signature</h4>
+                                <div style="overflow: auto;">
+                                    <table class="table table-responsive table-striped table-hover table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>Message: </strong></td>
+                                                <td data-bind="text: message"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Signature: </strong></td>
+                                                <td data-bind="text: signature"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- ko if: signatureError -->
+                                <p class="validationMessage alert alert-warning" data-bind="text: signatureError"></p>
+                                <!-- /ko -->
+
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <button class="btn btn-primary" data-bind="click: submitApplication">Submit Application</button>
+                                    </div>
+                                </div>
+                                <!-- /ko -->
+
+                                <!-- ko ifnot: signature -->
+                                <!-- ko if: signatureError -->
+                                <p class="validationMessage alert alert-warning" data-bind="text: signatureError"></p>
+                                <!-- /ko -->
+
+                                <!-- ko if: message -->
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <button class="btn btn-primary" data-bind="click: signMessage">Sign Message</button>
+                                    </div>
+                                </div>
+                                <!-- /ko -->
+                                <!-- /ko -->
+
+                                <!-- /ko -->
+                                <!-- /ko -->
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /ko -->
+                    <!-- /ko -->
+                </div>
+            </div>
+        </div>
+{% include 'common-footer.html' %}
